@@ -25,7 +25,7 @@ jobs:
 
       - name: 跑接口测试
         run: |
-          newman run collection.json -e environment.json -d users.csv
+          newman run collection.json -e environment.json -d users.csv -r htmlextra --reporter-htmlextra-export report.html
 
       - name: 上传报告
         if: always()
