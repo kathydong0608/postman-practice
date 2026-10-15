@@ -1,0 +1,22 @@
+{
+	"id": "3690905a-2b3a-4f93-b4b1-1e5b7831d9e4",
+	"name": "Kathy的练习环境",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "https://jsonplaceholder.typicode.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "new_id",
+			"value": "101",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-10-15T05:30:32.916Z",
+	"_postman_exported_using": "Postman/12.32.3"
+}

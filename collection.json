@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "2edc0e30-4d76-4506-b580-f2d303cf8e70",
+    "name": "kathy的接口练习",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58943720",
+    "_collection_link": "https://go.postman.co/collection/58943720-2edc0e30-4d76-4506-b580-f2d303cf8e70?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "获取用户信息",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"状态码是 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"返回包含 name 字段\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property('name');\r\n});\r\n\r\npm.test(\"name 是 Leanne Graham\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData.name).to.eql(\"Leanne Graham\");\r\n});\r\n\r\npm.test(\"id 是数字\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData.id).to.be.a('number');\r\n});\r\n\r\npm.test(\"email包含@\", function(){\r\n    var jsondata = pm.response.json();\r\n    pm.expect(jsondata.email).to.include('@');\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "创建帖子",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"状态码是 201\", function () {\n    pm.response.to.have.status(201);\n});\n\nvar jsonData = pm.response.json();\n\npm.test(\"返回的 id 是 101\", function () {\n    pm.expect(jsonData.id).to.eql(101);\n});\n\n// 存 id 到环境变量\npm.environment.set(\"new_id\", jsonData.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"kathy 的练习帖\",\r\n  \"body\": \"这是我用 Postman 创建的第一条数据\",\r\n  \"userId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "查看刚创建的帖子",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts/{{new_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts",
+            "{{new_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "批量创建帖子",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"状态码是201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\npm.test(\"title里包含用户名\", function () {\r\n    var jsondata = pm.response.json();\r\n    pm.expect(jsondata.title).to.include(pm.iterationData.get(\"username\")); // 可以读取当前迭代的 CSV 值。\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"{{username}}的帖子\",\r\n  \"body\": \"来自{{email}}\",\r\n  \"userId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
